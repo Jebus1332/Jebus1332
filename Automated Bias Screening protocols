@@ -1,0 +1,44 @@
+Automating Bias Detection with Machine Learning, first set up vector map and make a script function like a basic polynomial and add an adaptive chart to integrate into a UI to visualize and flag accuracy and reliability margin.
+Next, we’ll train a simple model to detect bias in articles based on text data. This uses scikit-learn and Naive Bayes. 
+-Set Variables according to dynamic [importance&subject-matter+relevant_avb_data_query_results but prioritize paid redaction and earliest src compile and review [accuracy of publisher and affiliate network corespondants%parse$newLIB w/illustration. 
+4.1 Bias Detection Script
+Create another script (e.g., bias_detection.py) and copy the following code:
+
+python
+Copy code
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Sample dataset (replace with actual data)
+data = [
+    {"text": "This candidate is the best!", "label": "biased"},
+    {"text": "The policy focuses on economic growth.", "label": "unbiased"},
+    # Add more examples
+]
+
+# Preparing data
+texts = [d['text'] for d in data]
+labels = [d['label'] for d in data]
+
+# Convert text to feature vectors
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(texts)
+y = labels
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train a simple Naive Bayes classifier
+model = MultinomialNB()
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+4.2 Run the Bias Detection Script
+Save the file and run it in the terminal, similar to the previous example:
+bash
+Copy code
+python bias_detection.py
