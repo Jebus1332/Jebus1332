@@ -3,12 +3,12 @@
 - 🌱 I’m currently learning how to be human ... The beginning of light and the spinor factors of inductive capacity. 
 - 💞️ I’m looking to collaborate on ... Inventions, App for the furute of everything automation.
 - 📫 How to reach me ... #jebus1332@DISCORD 
-- 😄 Pronouns: ...Most High, I am
+- 😄 Pronouns: ...Mostly High, How I am?
 - ⚡ Fun fact: ...UNIVERSAL VICAR POLICY AO-SYS
 - Efficiency Formula Example:
 [scss]  :Optimize the workflow by calculating time, energy consumption, token cost (for NLP models), and accuracy to achieve maximum output with minimal input.
 Begin Questo to enlightenment.
-Strategy: Achieve a 5+ Dimensional thought process that seemlessly intigrated into a data matrix with adaptive focus on ecouragment with positive feedback. 
+Strategy: Achieve a 6+ Dimensional thought process that seemlessly intigrated into a data matrix with adaptive focus on ecouragment with positive feedback. 
 Efficiency Metrics: Implement an algorithm that evaluates:
 Time/Accuracy Trade-off: Use probabilistic models like Bayesian Inference to weigh the time it takes to make a decision versus the accuracy of the outcome.
 
