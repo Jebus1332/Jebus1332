@@ -1,0 +1,117 @@
+# Re-creating the zip file after execution state reset
+
+import os
+import zipfile
+
+# Folder structure
+project_name = "custom_llm_project"
+project_structure = {
+    f"{project_name}/scripts": {
+        "web_scraper.py": """import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def fetch_articles(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    articles = []
+    for article in soup.find_all('article'):
+        title = article.find('h1').text
+        content = article.find('p').text
+        articles.append({'title': title, 'content': content})
+    return pd.DataFrame(articles)
+
+if __name__ == "__main__":
+    url = 'https://example-news-site.com'
+    df = fetch_articles(url)
+    df.to_csv('data/articles.csv', index=False)
+""",
+        "data_processing.py": """import pandas as pd
+
+def clean_data(input_file):
+    df = pd.read_csv(input_file)
+    df['cleaned_content'] = df['content'].str.lower().replace(r'\\s+', ' ', regex=True)
+    df = df.drop_duplicates()
+    return df
+
+if __name__ == "__main__":
+    df = clean_data('data/articles.csv')
+    df.to_csv('data/cleaned_articles.csv', index=False)
+""",
+        "visualization.py": """import pandas as pd
+import matplotlib.pyplot as plt
+
+def plot_data(input_file):
+    df = pd.read_csv(input_file)
+    df['word_count'] = df['cleaned_content'].str.split().apply(len)
+    plt.hist(df['word_count'], bins=30, color='blue', alpha=0.7)
+    plt.title('Word Count Distribution')
+    plt.savefig('data/word_count_distribution.png')
+    plt.show()
+
+if __name__ == "__main__":
+    plot_data('data/cleaned_articles.csv')
+"""
+    },
+    f"{project_name}/": {
+        "run_workflow.py": """import subprocess
+
+def run_workflow():
+    subprocess.run(["python", "scripts/web_scraper.py"])
+    subprocess.run(["python", "scripts/data_processing.py"])
+    subprocess.run(["python", "scripts/visualization.py"])
+
+if __name__ == "__main__":
+    run_workflow()
+""",
+        "requirements.txt": """beautifulsoup4
+pandas
+matplotlib
+requests
+""",
+        ".github/workflows/data_workflow.yml": """name: Data Workflow Automation
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  data_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run Data Workflow
+        run: |
+          python run_workflow.py
+""",
+        "README.md": """# Custom LLM Data Workflow
+
+## How to Run
+1. Clone the repository.
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the workflow: `python run_workflow.py`
+"""
+    }
+}
+
+# Create zip file
+output_zip_path = '/mnt/data/custom_llm_project_v2.zip'
+
+with zipfile.ZipFile(output_zip_path, 'w') as zf:
+    for folder, files in project_structure.items():
+        for file_name, content in files.items():
+            file_path = os.path.join(folder, file_name)
+            zf.writestr(file_path, content)
+
+output_zip_path
